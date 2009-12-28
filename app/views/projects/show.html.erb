@@ -17,16 +17,37 @@
       <td><%= assigned_user = Lighthouse::User.find(t.assigned_user_id).name %></td>
       <td>
         <% form_tag create_story_path(:id => @project.id) do %>
-          <%= hidden_field :story, :name,  :value => title %>
-          <%= hidden_field :story, :requested_by, :value => creator  %>
-          <%= hidden_field :story, :owned_by, :value => assigned_user  %>
+          <%= hidden_field :story, :name,  :value => title, :id => "name_#{i}" %>
+          <%= hidden_field :story, :requested_by, :value => creator, :id => "creator_#{i}"  %>
+          <%= hidden_field :story, :owned_by, :value => assigned_user, :id => "assigned_user_#{i}"  %>
           <%= submit_tag "Creat Story" %>
         <% end %>
       </td>
     </tr>
   <% end %>
   <td>
-    <a href="javascript:undefined" onclick="$('.chk').attr('checked',true);return false"><%= 'Select all' %></a> |
-    <a href="javascript:undefined" onclick="$('.chk').attr('checked',false);return false"><%= 'Unselect all' %></a>
+    <a href="javascript:undefined" onclick="$('.chk').attr('checked',true);return false">Select all</a> |
+    <a href="javascript:undefined" onclick="$('.chk').attr('checked',false);return false">Unselect all</a>
   </td>
+  <td>
+    <a href="javascript:undefined" onclick="create_selected_story()">Create Stories</a>
+  </td>
+
+<script>
+    function create_selected_story() {
+      var checkboxes = $('input.chk:checked');
+      if (checkboxes.size() === 0) {
+        alert('Nothing is selected');
+      }
+      else if(window.confirm('Are you sure?')){
+        var sid = '<%= session[:session_id] %>';
+        checkboxes.each(function() {
+          var index = this.value.toString();
+          var url = '<%= create_story_path(:id => @project.id) %>';
+          var data = { sid: sid, "story[name]": $("#name_" + index).val(), "story[requested_by]": $("#creator_" + index).val(), "story[owned_by]": $("#assigned_user_" + index).val()};
+          jQuery.post(url, data);
+        });
+      }
+    }
+</script>
 </table>
