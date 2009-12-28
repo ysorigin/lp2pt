@@ -10,7 +10,7 @@
 <table>
   <tr><td>Title</td><td>Creator</td><td>Assigned To</td></tr>
   <% @tickets.each_with_index do |t, i| %>
-    <tr>
+    <tr id="ticket_<%= i %>">
       <td><%= check_box_tag t.id, i , false, :class => "chk" %></td>
       <td><%= link_to (title = "##{t.id} #{t.title}"), ticket_url(@project, t), {:target => "_blank"} %></td>
       <td><%= creator =  Lighthouse::User.find(t.creator_id).name %></td>
@@ -29,9 +29,11 @@
     <a href="javascript:undefined" onclick="$('.chk').attr('checked',true);return false">Select all</a> |
     <a href="javascript:undefined" onclick="$('.chk').attr('checked',false);return false">Unselect all</a>
   </td>
-  <td>
-    <a href="javascript:undefined" onclick="create_selected_story()">Create Stories</a>
-  </td>
+  <tr>
+    <td>
+      <a href="javascript:undefined" onclick="create_selected_story()">Create Stories</a>
+    </td>
+  </tr>
 
 <script>
     function create_selected_story() {
@@ -44,8 +46,14 @@
         checkboxes.each(function() {
           var index = this.value.toString();
           var url = '<%= create_story_path(:id => @project.id) %>';
-          var data = { sid: sid, "story[name]": $("#name_" + index).val(), "story[requested_by]": $("#creator_" + index).val(), "story[owned_by]": $("#assigned_user_" + index).val()};
-          jQuery.post(url, data);
+          var opts = { sid: sid, "story[name]": $("#name_" + index).val(), "story[requested_by]": $("#creator_" + index).val(), "story[owned_by]": $("#assigned_user_" + index).val()};
+
+          var callback = function(data) {
+            var arr = data === 'OK' ? ["OK",'green'] : ['ERROR','red'];
+            $('#ticket_' + index).css('background',arr[1]);
+          };
+          
+          jQuery.post(url, opts, callback);
         });
       }
     }
