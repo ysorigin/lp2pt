@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
 
   def create_story
     @story = Story.new(params[:story])
-    #@pt.create_story(@story)
+    @pt.create_story(@story)
     redirect_to :action => :show, :id => params[:id]
   end
 
