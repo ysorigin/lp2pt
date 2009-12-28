@@ -11,9 +11,17 @@
   <tr><td>Title</td><td>Creator</td><td>Assigned To</td></tr>
   <% @tickets.each do |t| %>
     <tr>
-      <td><%= link_to "##{t.id} #{t.title}", ticket_url(@project, t), {:target => "_blank"} %></td>
-      <td><%= Lighthouse::User.find(t.creator_id).name %></td>
-      <td><%= Lighthouse::User.find(t.assigned_user_id).name %></td>
+      <td><%= link_to (title = "##{t.id} #{t.title}"), ticket_url(@project, t), {:target => "_blank"} %></td>
+      <td><%= creator =  Lighthouse::User.find(t.creator_id).name %></td>
+      <td><%= assigned_user = Lighthouse::User.find(t.assigned_user_id).name %></td>
+      <td>
+        <% form_tag create_story_path(:id => @project.id) do %>
+          <%= hidden_field :story, :name,  :value => title %>
+          <%= hidden_field :story, :requested_by, :value => creator  %>
+          <%= hidden_field :story, :owned_by, :value => assigned_user  %>
+          <%= submit_tag "Creat Story" %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
