@@ -6,7 +6,7 @@
   <tr><td>Title</td><td>Creator</td><td>Assigned To</td></tr>
 <% @tickets.each do |t| %>
   <tr>
-  <td>#<%= t.id %>&nbsp;<%= t.title %></td>
+    <td><%= link_to "##{t.id} #{t.title}", ticket_url(@project, t), {:target => "_blank"} %></td>
   <td><%= Lighthouse::User.find(t.creator_id).name %></td>
   <td><%= Lighthouse::User.find(t.assigned_user_id).name %></td>
   </tr>
