@@ -21,6 +21,6 @@ class ProjectsController < ApplicationController
 
   private
   def find_pt
-    @pt ||= PivotalTracker.new(LP2PT[params[:id]], PTTOKEN)
+    @pt ||= PivotalTracker.new(LP2PT_ID[params[:id]], PTTOKEN, :ssl => true)
   end
 end

@@ -46,5 +46,10 @@ require "pp"
 Lighthouse.account = 'theplant'
 Lighthouse.token = "5da87166315902951c3dfbb27ff4c6e75ee65b4d"
 PTTOKEN = "463fe38b782461d347be33d7ab4ef2aa"
-LP2PT = { '18933' => '32141' #ASICS
+LP2PT_ID = { '18933' => '32141' #ASICS
         }
+LP2PT_USER = {
+            'Raphaël Mazoyer'  => "Raphael Mazoyer",
+            'Jan' => 'Jan Xie',
+            'Anatole' => 'Anatole Varin'
+}
