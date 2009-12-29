@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   def create_story
     @story = Story.new(params[:story])
     @pt.create_story(@story)
-    params[:sid].nil? ? (redirect_to :action => :show, :id => params[:id]) : (render :text =>'OK')
+    params[:sid].nil? ? (redirect_to params[:back_to]) : (render :text =>'OK')
   end
 
   private
