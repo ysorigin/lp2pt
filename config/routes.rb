@@ -9,6 +9,8 @@ ActionController::Routing::Routes.draw do |map|
     x.importance "/project/:id/important", :action => :show, :query => "tagged:important"
     x.nice "/project/:id/nice", :action => :show, :query => "tagged:nice"
     x.felix "/project/:id/felix", :action => :show, :query => "responsible:felix"
+    x.kang "/project/:id/kang", :action => :show, :query => "responsible:kang"
+    x.kai "/project/:id/kai", :action => :show, :query => "responsible:kai"
   end
 
   map.connect ':controller/:action/:id'
