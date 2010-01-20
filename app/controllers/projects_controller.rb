@@ -9,8 +9,16 @@ class ProjectsController < ApplicationController
   def show
     @project = Lighthouse::Project.find(params[:id])
     cond = "state:new sort:number " + (params[:query] || "tagged:vital")
-    @tickets = @project.tickets(:q => cond)
+    @ticketss = @project.tickets(:q => cond)
     @stories = @pt.stories
+    @stories_l = []
+    @stories.each do |storie|
+      @stories_l << storie.name.scan(/#\d+/).to_s
+    end
+    @tickets = []
+    @ticketss.each do |ticket|
+     @tickets << ticket if !@stories_l.include?("##{ticket.id.to_s}")
+    end
   end
 
   def create_story
