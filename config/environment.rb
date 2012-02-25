@@ -43,10 +43,10 @@ Rails::Initializer.run do |config|
 end
 require "pivotal-tracker"
 require "pp"
-Lighthouse.account = 'theplant'
-Lighthouse.token = "5da87166315902951c3dfbb27ff4c6e75ee65b4d"
-PTTOKEN = "463fe38b782461d347be33d7ab4ef2aa"
-LP2PT_ID = { '18933' => '32141' #ASICS
+Lighthouse.account = 'project account'
+Lighthouse.token = "project token"
+PTTOKEN = "PT token"
+LP2PT_ID = { '18933' => 'ID'
         }
 LP2PT_USER = {
             'Raphaël Mazoyer'  => "Raphael Mazoyer",
